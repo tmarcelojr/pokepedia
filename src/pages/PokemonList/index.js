@@ -39,7 +39,16 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
             // axios all() makes all concurrent requests
             // instead of doing individuals req, we can programtically make multiple req
             // If one of our Promises fails, the entire request fails
-            axios.all()
+
+            const pokeArr = []
+            axios.all(pokeURLs.map(async (url) => {
+                const response = await axios.get(url)
+                // console.log(response.data)
+                pokeArr.push(response.data)
+                setCurrentPokemon(pokeArr)
+                // console.log('POKE ARRAY', pokeArr)
+            }))
+
         } catch (error) {
 
         }
