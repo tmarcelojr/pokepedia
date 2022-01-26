@@ -18,18 +18,20 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
         setPageCount(Math.ceil(pokeList.length / itemsPerPage));
     }, [itemOffset, itemsPerPage]);
 
-    const Items = ({ currentItems }) => {
+    const Pokemon = () => {
         return (
-          <>
-            {currentItems &&
-              currentItems.map((item) => (
-                <div>
-                  <h3>Item #{item}</h3>
-                </div>
-              ))}
-          </>
+            <>
+                {
+                    pokeList &&
+                    pokeList.map(pokemon => (
+                        <div>
+                            <h3>{pokemon.name}</h3>
+                        </div>
+                    ))
+                }
+            </>
         );
-      }
+    }
 
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
@@ -42,14 +44,25 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
     return (
         <div>
-            <Items currentItems={currentItems} />
+            <Pokemon />
             <ReactPaginate
-                breakLabel="..."
                 nextLabel="next >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
                 pageCount={pageCount}
                 previousLabel="< previous"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
                 renderOnZeroPageCount={null}
             />
         </div>
