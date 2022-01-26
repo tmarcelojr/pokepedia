@@ -45,8 +45,8 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                 const response = await axios.get(url)
                 // console.log(response.data)
                 pokeArr.push(response.data)
-                setCurrentPokemon(pokeArr)
                 // console.log('POKE ARRAY', pokeArr)
+                setCurrentPokemon(pokeArr.flat())
             }))
 
         } catch (error) {
@@ -58,10 +58,10 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
         return (
             <>
                 {
-                    pokeList &&
-                    pokeList.map(pokemon => (
+                    currentPokemon &&
+                    currentPokemon.map(pokemon => (
                         <div>
-                            {/* <h3>{pokemon.name}</h3> */}
+                            <h3>{pokemon.name}</h3>
                         </div>
                     ))
                 }
