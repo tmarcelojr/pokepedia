@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate'
 import axios from 'axios'
+import './styles.css'
 
 const PokemonList = ({ pokeList, itemsPerPage }) => {
     // console.log('props', pokeList)
@@ -25,10 +26,11 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
             // console.log('urls', pokeURLs)
             currPagePokemon(pokeURLs)
-
+            console.log('teo', pokeList)
+            const length = pokeList.length ? pokeList.length : 1118
+            setPageCount(Math.ceil(length / itemsPerPage));
             // setCurrentPokemon(pokeList.slice(itemOffset, endOffset));
             // if(currentPokemon) currPagePokemon()
-            setPageCount(Math.ceil(pokeList.length / itemsPerPage));
         } catch (error) {
             console.log(error)
         }
@@ -56,16 +58,21 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
     const Pokemon = () => {
         return (
-            <>
+            <div id='pokemon-container'>
                 {
                     currentPokemon &&
                     currentPokemon.map(pokemon => (
-                        <div>
-                            <h3>{pokemon.name}</h3>
+                        <div className="card poke-card" key={pokemon.id}>
+                            <img src={pokemon.sprites.front_shiny} className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">{pokemon.name}</h5>
+                                    <p className="card-text">Order: {pokemon.id}</p>
+                                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                                </div>
                         </div>
                     ))
                 }
-            </>
+            </div>
         );
     }
 
@@ -83,6 +90,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
     return (
         <div>
             <Pokemon />
+
             <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}
