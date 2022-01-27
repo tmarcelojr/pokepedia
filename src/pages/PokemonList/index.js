@@ -3,7 +3,8 @@ import ReactPaginate from 'react-paginate'
 import axios from 'axios'
 import './styles.css'
 
-const PokemonList = ({ pokeList, itemsPerPage }) => {
+// props destructuring
+const PokemonList = ({ pokeList, itemsPerPage, addToFavorites }) => {
     // console.log('props', pokeList)
     // We start with an empty list of pokeList.
     const [currentPokemon, setCurrentPokemon] = useState([]);
@@ -29,9 +30,9 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                 }
             }
 
-            console.log('urls', pokeURLs)
+            // console.log('urls', pokeURLs)
             currPagePokemon(pokeURLs)
-            console.log('teo', pokeList)
+            // console.log('teo', pokeList)
             const length = pokeList.length ? pokeList.length : 1118
             setPageCount(Math.ceil(length / itemsPerPage));
             // setCurrentPokemon(pokeList.slice(itemOffset, endOffset));
@@ -79,6 +80,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                             <div className="card-body">
                                 <h5 className="card-title">{pokemon.name}</h5>
                                 <p className="card-text">Order: {pokemon.id}</p>
+                                <button className='btn btn-danger' onClick={() => addToFavorites(pokemon)}>Like</button>
                                 <a href="#" className="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
@@ -97,7 +99,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
         setItemOffset(newOffset);
     };
 
-    console.log('current pokemon', currentPokemon)
+    // console.log('current pokemon', currentPokemon)
 
     return (
         <div>

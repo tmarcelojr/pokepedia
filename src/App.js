@@ -7,6 +7,7 @@ import Nav from './components/Nav'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import PokemonList from './pages/PokemonList'
+import Favorites from './pages/Favorites'
 // contexts
 import UserContext from './contexts/UserContext.js'
 // css
@@ -20,6 +21,7 @@ const App = () => {
   // We will pass on our user to all of App's children via the Provider value prop
   const [user, setUser] = useState('')
   const [pokeList, setPokeList] = useState([])
+  const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
     fetchPokemon()
@@ -32,10 +34,18 @@ const App = () => {
       const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1118")
 
       setPokeList(response.data.results)
-      
-    } catch(error) {
+
+    } catch (error) {
       console.log(error)
     }
+  }
+
+  const addToFavorites = (pokemon) => {
+    // When we click like inside Pokemon List, send clicked Pokemon back to App
+    // Trigger this function to update our state
+    // App will then pass our state as props to Favorites
+    console.log('we added', pokemon)
+    setFavorites([...favorites, pokemon])
   }
 
   // console.log('pokeList', pokeList)
@@ -51,9 +61,16 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='login' element={<Login setUser={setUser} />} />
-          <Route path='pokemon/list' element={<PokemonList pokeList={pokeList} itemsPerPage={8} />} />
+          <Route path='pokemon/list' element={
+            <PokemonList
+              pokeList={pokeList}
+              itemsPerPage={8}
+              addToFavorites={addToFavorites}
+            />
+          } />
+          <Route path='favorites' element={<Favorites favorites={favorites} />} />
         </Routes>
-          
+
       </UserContext.Provider>
 
     </div>
