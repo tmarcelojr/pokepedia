@@ -20,11 +20,16 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
             const pokeURLs = []
 
-            for (let i = itemOffset + 1; i <= endOffset; i++) {
-                pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
+            for (let i = itemOffset; i < endOffset; i++) {
+                if (i < 898) {
+                    pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i + 1}`)
+                }
+                else {
+                    pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i + 9102}`)
+                }
             }
 
-            // console.log('urls', pokeURLs)
+            console.log('urls', pokeURLs)
             currPagePokemon(pokeURLs)
             console.log('teo', pokeList)
             const length = pokeList.length ? pokeList.length : 1118
@@ -63,12 +68,19 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                     currentPokemon &&
                     currentPokemon.map(pokemon => (
                         <div className="card poke-card" key={pokemon.id}>
-                            <img src={pokemon.sprites.front_shiny} className="card-img-top" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title">{pokemon.name}</h5>
-                                    <p className="card-text">Order: {pokemon.id}</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
+                            <img src={
+                                pokemon.sprites.front_shiny ? 
+                                pokemon.sprites.front_shiny : 
+                                pokemon.sprites.front_default
+                                } 
+                                className="card-img-top" 
+                                alt="..." 
+                            />
+                            <div className="card-body">
+                                <h5 className="card-title">{pokemon.name}</h5>
+                                <p className="card-text">Order: {pokemon.id}</p>
+                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                            </div>
                         </div>
                     ))
                 }
