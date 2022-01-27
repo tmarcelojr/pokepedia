@@ -70,9 +70,9 @@ const PokemonList = ({ pokeList, itemsPerPage, addToFavorites }) => {
                     currentPokemon.map(pokemon => (
                         <div className="card poke-card" key={pokemon.id}>
                             <img src={
-                                pokemon.sprites.front_shiny ? 
-                                pokemon.sprites.front_shiny : 
-                                pokemon.sprites.front_default
+                                pokemon.sprites.front_shiny ||
+                                pokemon.sprites.front_shiny || 
+                                pokemon.sprites.other['official-artwork'].front_default
                                 } 
                                 className="card-img-top" 
                                 alt="..." 
